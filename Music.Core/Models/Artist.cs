@@ -7,11 +7,11 @@ namespace Music.Core.Models
     {
         public Artist()
         {
-            Musics = new Collection<Music>();
+            Musics = new Collection<Song>();
         }
 
         public int Id { get; set; }
         public string Name { get; set; }
-        public ICollection<Music> Musics { get; set; }
+        public ICollection<Song> Musics { get; set; }
     }
 }
