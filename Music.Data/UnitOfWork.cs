@@ -13,10 +13,10 @@ namespace Music.Data
 
         public UnitOfWork(MusicDbContext context)
         {
-            _context = context;
+            _context = context;            
         }
 
-        public ISongRepository Songs => _songRepository ??= new SongRepository(_context);
+        public ISongRepository Songs => _songRepository ??= new SongRepository (_context);
         public IArtistRepository Artists => _artistRepository ??= new ArtistRepository(_context);
 
         public async Task<int> CommitAsync()

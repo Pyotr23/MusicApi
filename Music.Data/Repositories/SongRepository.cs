@@ -15,14 +15,14 @@ namespace Music.Data.Repositories
 
         public async Task<IEnumerable<Song>> GetAllWithArtistAsync()
         {
-            return await _dbSet
+            return await DbSet
                 .Include(s => s.Artist)
                 .ToListAsync();
         }
 
         public async Task<IEnumerable<Song>> GetAllWithArtistByArtistIdAsync(int artistId)
         {
-            return await _dbSet
+            return await DbSet
                 .Include(a => a.Artist)
                 .Where(a => a.ArtistId == artistId)
                 .ToListAsync();
@@ -30,7 +30,7 @@ namespace Music.Data.Repositories
 
         public async Task<Song> GetWithArtistByIdAsync(int id)
         {
-            return await _dbSet
+            return await DbSet
                 .Include(s => s.Artist)
                 .SingleOrDefaultAsync(s => s.Id == id);
         }
