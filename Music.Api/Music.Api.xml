@@ -6,9 +6,16 @@
     <members>
         <member name="M:Music.Api.Controllers.SongsController.GetAllSongs">
             <summary>
-                Получение всех песен с исполнителями.
+                Получение всех песен.
             </summary>
-            <returns></returns>
+            <returns> Результат запроса со списком песен. </returns>
+        </member>
+        <member name="M:Music.Api.Controllers.SongsController.GetSongById(System.Int32)">
+            <summary>
+                Получить песню по идентификатору.
+            </summary>
+            <param name="id"> Идентификатор песни </param>
+            <returns> Результат запроса с песней. </returns>
         </member>
     </members>
 </doc>

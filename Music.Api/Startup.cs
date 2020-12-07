@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
+using AutoMapper;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpsPolicy;
@@ -48,7 +49,10 @@ namespace Music.Api
                     var xmlFileName = typeof(Startup).Namespace;
                     var xmlPath = Path.Combine(basePath, $"{xmlFileName}.xml");
                     options.IncludeXmlComments(xmlPath);
-                }); 
+                });
+
+            services
+                .AddAutoMapper(typeof(Startup));
 
             var connectionString = Configuration.GetConnectionString("Default");
             services               
