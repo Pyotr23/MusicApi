@@ -13,7 +13,7 @@ namespace Music.Services
         private readonly IUnitOfWork _unitOfWork;
         private readonly ISongRepository _songs;
 
-        public SongService(UnitOfWork unitOfWork)
+        public SongService(IUnitOfWork unitOfWork)
         {
             _unitOfWork = unitOfWork;
             _songs = unitOfWork.Songs;

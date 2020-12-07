@@ -1,0 +1,14 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>Music.Api</name>
+    </assembly>
+    <members>
+        <member name="M:Music.Api.Controllers.SongsController.GetAllSongs">
+            <summary>
+                Получение всех песен с исполнителями.
+            </summary>
+            <returns></returns>
+        </member>
+    </members>
+</doc>

@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Builder;
@@ -39,7 +40,15 @@ namespace Music.Api
                 .AddSwaggerGen(options =>
                 {
                     options.SwaggerDoc(apiConfiguration.Version, (OpenApiInfo)apiConfiguration);
-                });
+                })
+                .ConfigureSwaggerGen(options =>
+                {
+                    options.CustomSchemaIds(x => x.FullName);
+                    var basePath = Directory.GetCurrentDirectory();
+                    var xmlFileName = typeof(Startup).Namespace;
+                    var xmlPath = Path.Combine(basePath, $"{xmlFileName}.xml");
+                    options.IncludeXmlComments(xmlPath);
+                }); 
 
             var connectionString = Configuration.GetConnectionString("Default");
             services               
@@ -47,10 +56,10 @@ namespace Music.Api
                     options.UseSqlServer(
                         connectionString,
                         builder => builder.MigrationsAssembly("Music.Data"))
-                )                
-                .AddTransient<ISongService, SongService>()  
-                .AddTransient<IArtistService, ArtistService>()
+                )
                 .AddScoped<IUnitOfWork, UnitOfWork>()
+                .AddTransient<ISongService, SongService>()  
+                .AddTransient<IArtistService, ArtistService>()                
                 .AddControllers();
         }
 
