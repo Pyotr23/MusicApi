@@ -13,6 +13,9 @@ namespace Music.Api.Mapping
 
             CreateMap<SongResource, Song>();
             CreateMap<ArtistResource, Artist>();
+
+            CreateMap<SaveSongResource, Song>();
+            CreateMap<SaveArtistResource, Artist>();
         }
     }
 }

@@ -36,7 +36,7 @@ namespace Music.Api
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            var apiConfiguration = getApiConfiguration(services);
+            var apiConfiguration = GetApiConfiguration(services);
             services
                 .AddSwaggerGen(options =>
                 {
@@ -95,7 +95,7 @@ namespace Music.Api
             });
         }
 
-        private ApiConfiguration getApiConfiguration(IServiceCollection services)
+        private ApiConfiguration GetApiConfiguration(IServiceCollection services)
         {
             return services
                 .AddCustomOptions(Configuration)

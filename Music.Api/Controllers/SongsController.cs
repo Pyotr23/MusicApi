@@ -3,6 +3,7 @@ using System.Threading.Tasks;
 using AutoMapper;
 using Microsoft.AspNetCore.Mvc;
 using Music.Api.Resources;
+using Music.Api.Validators;
 using Music.Core.Models;
 using Music.Core.Services;
 
@@ -42,6 +43,22 @@ namespace Music.Api.Controllers
         public async Task<ActionResult<SongResource>> GetSongById(int id)
         {
             var song = await _songService.GetSongById(id);
+            var songResource = _mapper.Map<Song, SongResource>(song);
+            return Ok(songResource);
+        }
+
+        [HttpPost]
+        public async Task<ActionResult<SongResource>> CreateSong([FromBody] SaveSongResource saveSongResource)
+        {
+            var validator = new SaveSongResourceValidator();
+            var validationResult = await validator.ValidateAsync(saveSongResource);
+
+            if (!validationResult.IsValid)
+                return BadRequest(validationResult.Errors);
+
+            var songToCreate = _mapper.Map<SaveSongResource, Song>(saveSongResource);
+            var newSong = _songService.CreateSong(songToCreate);
+            var song = await _songService.GetSongById(newSong.Id);
             var songResource = _mapper.Map<Song, SongResource>(song);
             return Ok(songResource);
         }
