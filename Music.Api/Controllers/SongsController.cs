@@ -47,6 +47,11 @@ namespace Music.Api.Controllers
             return Ok(songResource);
         }
 
+        /// <summary>
+        ///     Создать песню.
+        /// </summary>
+        /// <param name="saveSongResource"> DTO песни </param>
+        /// <returns> Результат запроса с песней. </returns>
         [HttpPost]
         public async Task<ActionResult<SongResource>> CreateSong([FromBody] SaveSongResource saveSongResource)
         {
@@ -61,6 +66,54 @@ namespace Music.Api.Controllers
             var song = await _songService.GetSongById(newSong.Id);
             var songResource = _mapper.Map<Song, SongResource>(song);
             return Ok(songResource);
+        }
+
+        /// <summary>
+        ///     Обновить песню.
+        /// </summary>
+        /// <param name="id"> Идентификатор песни </param>
+        /// <param name="saveSongResource"> DTO песни </param>
+        /// <returns> Результат запроса с песней. </returns>
+        [HttpPut("{id}")]
+        public async Task<ActionResult<SongResource>> UpdateSong(int id, [FromBody] SaveSongResource saveSongResource)
+        {
+            var validator = new SaveSongResourceValidator();
+            var validationResult = await validator.ValidateAsync(saveSongResource);
+
+            var isValidRequest = id > 0 && validationResult.IsValid;
+            if (!isValidRequest)
+                return BadRequest(validationResult.Errors);
+
+            var songForUpdate = await _songService.GetSongById(id);
+            if (songForUpdate == null)
+                return NotFound();
+
+            var song = _mapper.Map<SaveSongResource, Song>(saveSongResource);
+            await _songService.UpdateSong(songForUpdate, song);
+
+            var updatedSong = await _songService.GetSongById(id);
+            var updatedSongResource = _mapper.Map<Song, SongResource>(updatedSong);
+
+            return Ok(updatedSongResource);
+        }
+
+        /// <summary>
+        ///     Удалить песню.
+        /// </summary>
+        /// <param name="id"> Идентификатор песни </param>
+        /// <returns> Результат запроса. </returns>
+        [HttpDelete("{id}")]
+        public async Task<IActionResult> DeleteSong(int id)
+        {
+            if (id <= 0)
+                return BadRequest();
+
+            var song = await _songService.GetSongById(id);
+            if (song == null)
+                return NotFound();
+
+            await _songService.DeleteSong(song);
+            return NoContent();
         }
     }
 }

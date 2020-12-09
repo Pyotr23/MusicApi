@@ -17,5 +17,27 @@
             <param name="id"> Идентификатор песни </param>
             <returns> Результат запроса с песней. </returns>
         </member>
+        <member name="M:Music.Api.Controllers.SongsController.CreateSong(Music.Api.Resources.SaveSongResource)">
+            <summary>
+                Создать песню.
+            </summary>
+            <param name="saveSongResource"> DTO песни </param>
+            <returns> Результат запроса с песней. </returns>
+        </member>
+        <member name="M:Music.Api.Controllers.SongsController.UpdateSong(System.Int32,Music.Api.Resources.SaveSongResource)">
+            <summary>
+                Обновить песню.
+            </summary>
+            <param name="id"> Идентификатор песни </param>
+            <param name="saveSongResource"> DTO песни </param>
+            <returns> Результат запроса с песней. </returns>
+        </member>
+        <member name="M:Music.Api.Controllers.SongsController.DeleteSong(System.Int32)">
+            <summary>
+                Удалить песню.
+            </summary>
+            <param name="id"> Идентификатор песни </param>
+            <returns> Результат запроса. </returns>
+        </member>
     </members>
 </doc>
